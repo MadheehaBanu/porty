@@ -30,18 +30,17 @@ export default function CustomCursor() {
   }, [mouse]);
 
   useEffect(() => {
-    const interactives = document.querySelectorAll("a, button, [data-cursor]");
-    const enter = () => setHovering(true);
-    const leave = () => setHovering(false);
-    interactives.forEach((el) => {
-      el.addEventListener("mouseenter", enter);
-      el.addEventListener("mouseleave", leave);
-    });
+    const enter = (e: MouseEvent) => {
+      if ((e.target as Element).closest("a, button, [data-cursor]")) setHovering(true);
+    };
+    const leave = (e: MouseEvent) => {
+      if ((e.target as Element).closest("a, button, [data-cursor]")) setHovering(false);
+    };
+    document.addEventListener("mouseover", enter);
+    document.addEventListener("mouseout", leave);
     return () => {
-      interactives.forEach((el) => {
-        el.removeEventListener("mouseenter", enter);
-        el.removeEventListener("mouseleave", leave);
-      });
+      document.removeEventListener("mouseover", enter);
+      document.removeEventListener("mouseout", leave);
     };
   }, []);
 

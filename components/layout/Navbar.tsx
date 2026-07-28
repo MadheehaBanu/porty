@@ -117,6 +117,8 @@ export default function Navbar() {
         ref={menuRef}
         className="mobile-menu"
         style={{ clipPath: "inset(0 0 100% 0)" }}
+        aria-hidden={!menuOpen}
+        inert={!menuOpen ? ("" as unknown as boolean) : undefined}
       >
         <button
           className="absolute top-6 right-6 text-zinc-400 hover:text-white"
