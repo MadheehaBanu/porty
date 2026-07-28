@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono, Inter } from "next/font/google";
 import "./globals.css";
+import PageTransition from "@/components/layout/PageTransition";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -34,11 +35,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body
-        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${inter.variable} noise-overlay antialiased`}
-      >
-        {children}
+    <html lang="en">
+      <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${inter.variable} noise-overlay antialiased`}>
+        <PageTransition>
+          {children}
+        </PageTransition>
       </body>
     </html>
   );

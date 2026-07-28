@@ -16,39 +16,35 @@ export default function SectionHeading({ number, title, subtitle }: SectionHeadi
 
   useEffect(() => {
     if (!ref.current) return;
-    const lines = ref.current.querySelectorAll(".heading-line");
     gsap.fromTo(
-      lines,
+      ref.current.querySelectorAll(".heading-line"),
       { y: 60, opacity: 0 },
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.15,
-        ease: "power4.out",
-        scrollTrigger: {
-          trigger: ref.current,
-          start: "top 80%",
-        },
-      }
+      { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: "power4.out",
+        scrollTrigger: { trigger: ref.current, start: "top 80%" } }
     );
   }, []);
 
   return (
-    <div ref={ref} className="mb-16 md:mb-24">
-      <div className="overflow-hidden">
-        <div className="heading-line font-mono text-accent-indigo text-sm mb-3 opacity-0">
+    <div ref={ref} style={{ marginBottom: "3.5rem", textAlign: "center" }}>
+      <div style={{ overflow: "hidden" }}>
+        <div
+          className="heading-line font-mono"
+          style={{ color: "#6366f1", fontSize: "0.875rem", marginBottom: "0.75rem" }}
+        >
           {number} ——
         </div>
       </div>
-      <div className="overflow-hidden">
-        <h2 className="heading-line font-heading font-black text-4xl md:text-6xl text-white opacity-0">
+      <div style={{ overflow: "hidden" }}>
+        <h2
+          className="heading-line font-heading"
+          style={{ fontWeight: 900, fontSize: "clamp(2rem, 6vw, 3.75rem)", color: "#fff" }}
+        >
           {title}
         </h2>
       </div>
       {subtitle && (
-        <div className="overflow-hidden mt-4">
-          <p className="heading-line text-zinc-400 text-lg opacity-0">{subtitle}</p>
+        <div style={{ overflow: "hidden", marginTop: "1rem" }}>
+          <p className="heading-line" style={{ color: "#a1a1aa", fontSize: "1.0625rem" }}>{subtitle}</p>
         </div>
       )}
     </div>

@@ -5,7 +5,7 @@ import { useMousePosition } from "@/hooks/useMousePosition";
 export default function CustomCursor() {
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
-  const mouse = useMousePosition();
+  const { positionRef } = useMousePosition();
   const [hovering, setHovering] = useState(false);
   const ringPos = useRef({ x: 0, y: 0 });
   const rafRef = useRef<number>(0);
@@ -15,19 +15,19 @@ export default function CustomCursor() {
     const ring = ringRef.current;
     if (!dot || !ring) return;
 
-    dot.style.left = `${mouse.x}px`;
-    dot.style.top = `${mouse.y}px`;
-
     const animate = () => {
-      ringPos.current.x += (mouse.x - ringPos.current.x) * 0.12;
-      ringPos.current.y += (mouse.y - ringPos.current.y) * 0.12;
+      const { x, y } = positionRef.current;
+      dot.style.left = `${x}px`;
+      dot.style.top = `${y}px`;
+      ringPos.current.x += (x - ringPos.current.x) * 0.12;
+      ringPos.current.y += (y - ringPos.current.y) * 0.12;
       ring.style.left = `${ringPos.current.x}px`;
       ring.style.top = `${ringPos.current.y}px`;
       rafRef.current = requestAnimationFrame(animate);
     };
     rafRef.current = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(rafRef.current);
-  }, [mouse]);
+  }, [positionRef]);
 
   useEffect(() => {
     const enter = (e: MouseEvent) => {

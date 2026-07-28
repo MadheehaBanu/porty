@@ -7,28 +7,41 @@ import { skillCategories, terminalCode } from "@/lib/data";
 
 gsap.registerPlugin(ScrollTrigger);
 
-function SkillBar({ level, delay = 0 }: { level: number; delay?: number }) {
-  const barRef = useRef<HTMLDivElement>(null);
+const categoryIcons: Record<string, string> = {
+  frontend: "⬡",
+  backend: "⚙",
+  database: "◈",
+  languages: "</>",
+  tools: "⚒",
+};
 
-  useEffect(() => {
-    if (!barRef.current) return;
-    gsap.to(barRef.current, {
-      scaleX: level / 100,
-      duration: 1,
-      delay,
-      ease: "power3.out",
-      scrollTrigger: { trigger: barRef.current, start: "top 90%" },
-    });
-  }, [level, delay]);
+const categoryColors: Record<string, { accent: string; glow: string; bg: string }> = {
+  frontend:  { accent: "#6366f1", glow: "rgba(99,102,241,0.25)",  bg: "rgba(99,102,241,0.08)"  },
+  backend:   { accent: "#06b6d4", glow: "rgba(6,182,212,0.25)",   bg: "rgba(6,182,212,0.08)"   },
+  database:  { accent: "#8b5cf6", glow: "rgba(139,92,246,0.25)",  bg: "rgba(139,92,246,0.08)"  },
+  languages: { accent: "#f59e0b", glow: "rgba(245,158,11,0.25)",  bg: "rgba(245,158,11,0.08)"  },
+  tools:     { accent: "#10b981", glow: "rgba(16,185,129,0.25)",  bg: "rgba(16,185,129,0.08)"  },
+};
 
+function RadialProgress({ level, color }: { level: number; color: string }) {
+  const r = 20;
+  const circ = 2 * Math.PI * r;
+  const dash = (level / 100) * circ;
   return (
-    <div className="h-1 bg-dark-400 rounded-full overflow-hidden">
-      <div
-        ref={barRef}
-        className="skill-bar-fill h-full rounded-full"
-        style={{ transform: "scaleX(0)" }}
+    <svg width="52" height="52" className="shrink-0">
+      <circle cx="26" cy="26" r={r} fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="3" />
+      <circle
+        cx="26" cy="26" r={r} fill="none"
+        stroke={color} strokeWidth="3"
+        strokeDasharray={`${dash} ${circ}`}
+        strokeLinecap="round"
+        transform="rotate(-90 26 26)"
+        style={{ filter: `drop-shadow(0 0 4px ${color})` }}
       />
-    </div>
+      <text x="26" y="31" textAnchor="middle" fontSize="10" fill={color} fontFamily="monospace" fontWeight="700">
+        {level}%
+      </text>
+    </svg>
   );
 }
 
@@ -43,20 +56,16 @@ function Terminal() {
     if (!termRef.current) return;
     gsap.fromTo(
       termRef.current.querySelectorAll(".code-line"),
-      { opacity: 0, x: -20 },
+      { opacity: 0, x: -16 },
       {
-        opacity: 1,
-        x: 0,
-        stagger: 0.12,
-        duration: 0.4,
-        ease: "power2.out",
-        scrollTrigger: { trigger: termRef.current, start: "top 75%" },
+        opacity: 1, x: 0, stagger: 0.1, duration: 0.35, ease: "power2.out",
+        scrollTrigger: { trigger: termRef.current, start: "top 80%" },
       }
     );
   }, []);
 
-  const colorize = (line: string) => {
-    return line
+  const colorize = (line: string) =>
+    line
       .replace(/const|=>/g, (m) => `<span style="color:#c792ea">${m}</span>`)
       .replace(/madheeha/g, `<span style="color:#82aaff">madheeha</span>`)
       .replace(/"([^"]+)"/g, `<span style="color:#c3e88d">"$1"</span>`)
@@ -64,7 +73,6 @@ function Terminal() {
         `<span style="color:#f78c6c">${m}</span>`
       )
       .replace(/\/\/.+/g, (m) => `<span style="color:#546e7a">${m}</span>`);
-  };
 
   return (
     <div ref={termRef} className="terminal-window">
@@ -73,14 +81,12 @@ function Terminal() {
         <div className="terminal-dot bg-yellow-500" />
         <div className="terminal-dot bg-green-500" />
         <span className="font-mono text-xs text-zinc-500 ml-3">skills.ts</span>
+        <span className="ml-auto font-mono text-xs px-2 py-0.5 rounded" style={{ background: "rgba(99,102,241,0.15)", color: "#6366f1" }}>TypeScript</span>
       </div>
-      <div className="p-6 font-mono text-sm leading-7 overflow-x-auto">
+      <div className="font-mono overflow-x-auto" style={{ padding: "1.25rem", fontSize: "0.875rem", lineHeight: "1.75rem" }}>
         {lines.map((line, i) => (
-          <div
-            key={i}
-            className="code-line flex gap-4 opacity-0"
-          >
-            <span className="text-zinc-600 select-none w-5 text-right shrink-0">{i + 1}</span>
+          <div key={i} className="code-line" style={{ display: "flex", gap: "1.25rem" }}>
+            <span className="text-zinc-700 select-none" style={{ width: "1.25rem", textAlign: "right", flexShrink: 0, fontSize: "0.75rem", marginTop: "0.125rem" }}>{i + 1}</span>
             <span
               dangerouslySetInnerHTML={{ __html: mounted ? (colorize(line) || "&nbsp;") : (line || "&nbsp;") }}
               className="text-zinc-300"
@@ -88,8 +94,8 @@ function Terminal() {
             />
           </div>
         ))}
-        <div className="code-line flex gap-4 opacity-0">
-          <span className="text-zinc-600 select-none w-5 text-right shrink-0">{lines.length + 1}</span>
+        <div className="code-line" style={{ display: "flex", gap: "1.25rem" }}>
+          <span className="text-zinc-700 select-none" style={{ width: "1.25rem", textAlign: "right", flexShrink: 0, fontSize: "0.75rem" }}>{lines.length + 1}</span>
           <span className="typewriter-cursor" />
         </div>
       </div>
@@ -99,66 +105,151 @@ function Terminal() {
 
 export default function Skills() {
   const [activeTab, setActiveTab] = useState("frontend");
-  const cardsRef = useRef<HTMLDivElement>(null);
-
+  const gridRef = useRef<HTMLDivElement>(null);
   const activeCategory = skillCategories.find((c) => c.key === activeTab)!;
+  const colors = categoryColors[activeTab];
 
   useEffect(() => {
-    if (!cardsRef.current) return;
+    if (!gridRef.current) return;
     gsap.fromTo(
-      cardsRef.current.querySelectorAll(".skill-card"),
-      { y: 20, opacity: 0, scale: 0.95 },
-      {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        stagger: 0.07,
-        duration: 0.4,
-        ease: "back.out(1.4)",
-      }
+      gridRef.current.querySelectorAll(".skill-badge"),
+      { y: 24, opacity: 0, scale: 0.9 },
+      { y: 0, opacity: 1, scale: 1, stagger: 0.06, duration: 0.4, ease: "back.out(1.5)" }
     );
   }, [activeTab]);
 
   return (
-    <section id="skills" className="py-32 px-6 md:px-12 bg-dark-100">
-      <div className="max-w-6xl mx-auto">
+    <section id="skills" style={{ padding: "8rem 1.5rem" }} className="bg-dark-100">
+      <div style={{ maxWidth: "72rem", margin: "0 auto" }}>
         <SectionHeading number="02" title="Tech Arsenal" subtitle="Tools and technologies I work with" />
 
-        <Terminal />
+        {/* Terminal */}
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "3rem" }}>
+          <div style={{ width: "100%", maxWidth: "42rem" }}>
+            <Terminal />
+          </div>
+        </div>
 
-        <div className="mt-16">
-          {/* Tabs */}
-          <div className="flex flex-wrap gap-2 mb-8">
-            {skillCategories.map((cat) => (
+        {/* Category Tabs */}
+        <div style={{ marginTop: "4rem", display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "0.75rem" }}>
+          {skillCategories.map((cat) => {
+            const c = categoryColors[cat.key];
+            const isActive = activeTab === cat.key;
+            return (
               <button
                 key={cat.key}
                 onClick={() => setActiveTab(cat.key)}
-                className={`font-mono text-sm px-4 py-2 rounded-lg border transition-all duration-200 ${
-                  activeTab === cat.key
-                    ? "border-accent-indigo bg-accent-indigo/10 text-accent-indigo"
-                    : "border-white/10 text-zinc-500 hover:border-white/20 hover:text-zinc-300"
-                }`}
+                className="font-mono"
+                style={{
+                  position: "relative",
+                  fontSize: "0.875rem",
+                  padding: "0.625rem 1.25rem",
+                  borderRadius: "0.75rem",
+                  border: `1px solid ${isActive ? c.accent : "rgba(255,255,255,0.08)"}`,
+                  background: isActive ? c.bg : "transparent",
+                  color: isActive ? c.accent : "#71717a",
+                  boxShadow: isActive ? `0 0 20px ${c.glow}` : "none",
+                  cursor: "pointer",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.5rem",
+                  transition: "all 0.3s ease",
+                }}
               >
+                <span style={{ fontSize: "1rem", lineHeight: 1 }}>{categoryIcons[cat.key]}</span>
                 {cat.label}
+                {isActive && (
+                  <span style={{
+                    position: "absolute", top: "-4px", right: "-4px",
+                    width: "8px", height: "8px", borderRadius: "50%",
+                    background: c.accent, boxShadow: `0 0 6px ${c.accent}`
+                  }} />
+                )}
               </button>
-            ))}
-          </div>
+            );
+          })}
+        </div>
 
-          {/* Skill cards */}
-          <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {activeCategory.skills.map((skill, i) => (
-              <div
-                key={skill.name}
-                className="skill-card glow-border rounded-xl p-5 bg-dark-200 opacity-0"
-              >
-                <div className="flex justify-between items-center mb-3">
-                  <span className="font-heading font-semibold text-white">{skill.name}</span>
-                  <span className="font-mono text-xs text-accent-indigo">{skill.level}%</span>
+        {/* Skill Badges Grid */}
+        <div
+          ref={gridRef}
+          style={{
+            marginTop: "2rem",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+            gap: "1rem",
+          }}
+        >
+          {activeCategory.skills.map((skill) => (
+            <div
+              key={skill.name}
+              className="skill-badge card-lift"
+              style={{
+                borderRadius: "1rem",
+                padding: "1.25rem",
+                display: "flex",
+                alignItems: "center",
+                gap: "1rem",
+                cursor: "default",
+                transition: "all 0.3s ease",
+                background: "rgba(255,255,255,0.02)",
+                border: "1px solid rgba(255,255,255,0.07)",
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget as HTMLDivElement;
+                el.style.borderColor = colors.accent + "55";
+                el.style.background = colors.bg;
+                el.style.boxShadow = `0 0 24px ${colors.glow}`;
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget as HTMLDivElement;
+                el.style.borderColor = "rgba(255,255,255,0.07)";
+                el.style.background = "rgba(255,255,255,0.02)";
+                el.style.boxShadow = "none";
+              }}
+            >
+              <RadialProgress level={skill.level} color={colors.accent} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p className="font-heading" style={{ fontWeight: 600, color: "#fff", fontSize: "1rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {skill.name}
+                </p>
+                <div style={{ marginTop: "0.5rem", height: "4px", borderRadius: "9999px", overflow: "hidden", background: "rgba(255,255,255,0.06)" }}>
+                  <div style={{
+                    height: "100%",
+                    borderRadius: "9999px",
+                    width: `${skill.level}%`,
+                    background: `linear-gradient(90deg, ${colors.accent}, ${colors.accent}99)`,
+                    boxShadow: `0 0 8px ${colors.glow}`,
+                    transition: "width 0.7s ease",
+                  }} />
                 </div>
-                <SkillBar level={skill.level} delay={i * 0.05} />
+                <p className="font-mono" style={{ marginTop: "0.25rem", fontSize: "0.75rem", color: colors.accent + "99" }}>
+                  {skill.level >= 90 ? "Expert" : skill.level >= 80 ? "Advanced" : skill.level >= 70 ? "Proficient" : "Familiar"}
+                </p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Bottom stat strip */}
+        <div style={{ marginTop: "3rem", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "1rem" }}>
+          {[
+            { label: "Technologies", value: "20+" },
+            { label: "Languages", value: "6" },
+            { label: "Frameworks", value: "10+" },
+            { label: "Years Learning", value: "3+" },
+          ].map((stat) => (
+            <div key={stat.label} style={{
+              borderRadius: "0.75rem",
+              padding: "1rem",
+              textAlign: "center",
+              background: "rgba(99,102,241,0.05)",
+              border: "1px solid rgba(99,102,241,0.12)",
+            }}>
+              <p className="font-heading gradient-text" style={{ fontWeight: 700, fontSize: "1.5rem" }}>{stat.value}</p>
+              <p className="font-mono" style={{ fontSize: "0.75rem", color: "#71717a", marginTop: "0.25rem" }}>{stat.label}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>

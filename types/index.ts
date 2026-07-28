@@ -7,6 +7,7 @@ export interface Project {
   liveUrl: string;
   githubUrl: string;
   color: string;
+  image?: string;
 }
 
 export interface TimelineEntry {
@@ -14,6 +15,8 @@ export interface TimelineEntry {
   role: string;
   company: string;
   period: string;
+  location: string;
+  icon: "briefcase" | "graduation" | "book";
   description: string[];
   tech: string[];
 }

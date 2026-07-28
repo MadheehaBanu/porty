@@ -9,10 +9,11 @@ export const personalInfo = {
     "Currently working as a Full Stack Developer Intern, I spend my days crafting scalable web applications and my weekends diving into research.",
     "I believe in writing clean, efficient code and creating digital experiences that make a real difference. When I'm not coding, you'll find me exploring new technologies and pushing my creative boundaries.",
   ],
-  email: "madheeha@email.com",
-  github: "https://github.com/madheeha",
-  linkedin: "https://linkedin.com/in/madheeha",
+  email: "madheehabanu786@gmail.com",
+  github: "https://github.com/MadheehaBanu",
+  linkedin: "https://www.linkedin.com/in/madheeha-banu/",
   location: "Sri Lanka",
+  phone: "+94 76 365 9302",
   resumeUrl: "/resume.pdf",
 };
 
@@ -31,17 +32,40 @@ export const projects: Project[] = [
   {
     id: 2,
     number: "02",
-    name: "ShopPulse",
+    name: "Video Summarizer",
     description:
-      "A modern e-commerce product page with real-time cart management, dynamic filtering, and smooth micro-interactions.",
-    stack: ["Next.js", "TypeScript", "Zustand", "Tailwind CSS", "Embla Carousel"],
+      "A web app for uploading/downloading and generating AI summaries of videos — React + Vite frontend with a TypeScript codebase and an Express/Mongo backend that performs video processing and calls OpenAI.",
+    stack: ["Vite + React", "TypeScript", "Tailwind CSS", "Radix UI", "Express", "MongoDB", "OpenAI API", "FFmpeg", "AWS S3"],
     liveUrl: "#",
-    githubUrl: "#",
+    githubUrl: "https://github.com/MadheehaBanu/video_summarizer",
     color: "#06b6d4",
+    image: "/images/video_sum.png",
   },
   {
     id: 3,
     number: "03",
+    name: "DevBlog",
+    description:
+      "A complete, modern blog CMS built with FastAPI, HTMX, Alpine.js and Tailwind CSS — featuring async SQLite, JWT auth, Jinja2 templating, and zero JS-framework dynamic interactions.",
+    stack: ["FastAPI", "HTMX", "Alpine.js", "Tailwind CSS", "SQLAlchemy", "Jinja2", "Pydantic v2", "Alembic", "JWT"],
+    liveUrl: "#",
+    githubUrl: "https://github.com/MadheehaBanu/DevBlog",
+    color: "#8b5cf6",
+  },
+  {
+    id: 4,
+    number: "04",
+    name: "Invoice Management System",
+    description:
+      "A fully functional admin-only invoice management web app built with PHP & MySQL — featuring secure login, full CRUD invoices, auto-calculation of subtotal/tax/total, PDF download, and auto invoice numbering (INV-001, INV-002…).",
+    stack: ["PHP", "MySQL", "HTML", "CSS", "JavaScript"],
+    liveUrl: "#",
+    githubUrl: "https://github.com/MadheehaBanu/Invoice-Management-System",
+    color: "#f59e0b",
+  },
+  {
+    id: 5,
+    number: "05",
     name: "AdminCore",
     description:
       "An enterprise-grade admin dashboard with real-time data visualization, user management, and comprehensive analytics.",
@@ -51,8 +75,8 @@ export const projects: Project[] = [
     color: "#8b5cf6",
   },
   {
-    id: 4,
-    number: "04",
+    id: 6,
+    number: "06",
     name: "InkFlow",
     description:
       "A full-stack blog content management system with HTMX-powered interactions, markdown editing, and admin panel.",
@@ -62,8 +86,8 @@ export const projects: Project[] = [
     color: "#06b6d4",
   },
   {
-    id: 5,
-    number: "05",
+    id: 7,
+    number: "07",
     name: "Flavour House",
     description:
       "A sleek, animated restaurant landing page with smooth scroll animations, dark/light mode, and reservation system.",
@@ -80,6 +104,8 @@ export const timeline: TimelineEntry[] = [
     role: "Full Stack Developer Intern",
     company: "Tech Company",
     period: "2026 – Present",
+    location: "Remote",
+    icon: "briefcase",
     description: [
       "Building scalable web applications using modern frameworks",
       "Collaborating with cross-functional teams on product features",
@@ -92,6 +118,8 @@ export const timeline: TimelineEntry[] = [
     role: "Academic Researcher",
     company: "University of Vavuniya",
     period: "2025 – Present",
+    location: "On-site",
+    icon: "graduation",
     description: [
       "Conducting research in software engineering and web technologies",
       "Publishing findings and contributing to academic knowledge",
@@ -103,6 +131,8 @@ export const timeline: TimelineEntry[] = [
     role: "BICT (Hons) Student",
     company: "University of Vavuniya",
     period: "2022 – 2026",
+    location: "On-site",
+    icon: "book",
     description: [
       "Specializing in software development and information technology",
       "Relevant coursework: Data Structures, Algorithms, Web Development, Database Systems",
@@ -116,11 +146,11 @@ export const skillCategories: SkillCategory[] = [
     label: "Frontend",
     key: "frontend",
     skills: [
-      { name: "React", level: 90 },
-      { name: "Next.js", level: 88 },
-      { name: "Angular", level: 80 },
-      { name: "TypeScript", level: 85 },
-      { name: "Tailwind CSS", level: 92 },
+      { name: "React.js", level: 88 },
+      { name: "HTML", level: 95 },
+      { name: "CSS", level: 90 },
+      { name: "JavaScript", level: 90 },
+      { name: "Next.js", level: 82 },
     ],
   },
   {
@@ -128,20 +158,19 @@ export const skillCategories: SkillCategory[] = [
     key: "backend",
     skills: [
       { name: "Node.js", level: 82 },
-      { name: "FastAPI", level: 78 },
-      { name: "REST API", level: 88 },
-      { name: "GraphQL", level: 72 },
-      { name: "PHP", level: 70 },
+      { name: "PHP", level: 78 },
+      { name: "FastAPI", level: 75 },
+      { name: "REST API", level: 85 },
     ],
   },
   {
     label: "Database",
     key: "database",
     skills: [
+      { name: "MySQL", level: 85 },
       { name: "PostgreSQL", level: 80 },
-      { name: "MySQL", level: 82 },
-      { name: "SQLite", level: 85 },
-      { name: "SQL", level: 88 },
+      { name: "Firebase", level: 75 },
+      { name: "SQLite", level: 80 },
     ],
   },
   {
@@ -149,10 +178,11 @@ export const skillCategories: SkillCategory[] = [
     key: "languages",
     skills: [
       { name: "JavaScript", level: 90 },
-      { name: "TypeScript", level: 85 },
-      { name: "Python", level: 80 },
-      { name: "Java", level: 75 },
-      { name: "C#", level: 70 },
+      { name: "Java", level: 82 },
+      { name: "C++", level: 78 },
+      { name: "C", level: 75 },
+      { name: "C#", level: 72 },
+      { name: "PHP", level: 78 },
     ],
   },
   {
@@ -160,19 +190,18 @@ export const skillCategories: SkillCategory[] = [
     key: "tools",
     skills: [
       { name: "Git", level: 88 },
-      { name: "GSAP", level: 80 },
-      { name: "Three.js", level: 72 },
-      { name: "Framer Motion", level: 82 },
       { name: "VS Code", level: 95 },
+      { name: "Visual Studio", level: 80 },
+      { name: "GitHub", level: 85 },
     ],
   },
 ];
 
 export const terminalCode = `const madheeha = {
-  frontend: ["React", "Next.js", "Angular", "TypeScript", "Tailwind"],
-  backend:  ["Node.js", "FastAPI", "PHP", "GraphQL", "REST"],
-  databases:["PostgreSQL", "MySQL", "SQLite"],
-  languages:["JavaScript", "TypeScript", "Python", "Java", "C#", "C++"],
-  tools:    ["Git", "GitHub", "VS Code", "GSAP", "Three.js"],
+  frontend: ["React.js", "HTML", "CSS", "JavaScript", "Next.js"],
+  backend:  ["Node.js", "PHP", "FastAPI", "REST API"],
+  databases:["MySQL", "PostgreSQL", "Firebase", "SQLite"],
+  languages:["JavaScript", "Java", "C++", "C", "C#", "PHP"],
+  tools:    ["Git", "GitHub", "VS Code", "Visual Studio"],
   passion:  "Crafting digital experiences that matter ✨",
 };`;

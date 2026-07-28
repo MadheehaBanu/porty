@@ -1,11 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
 import Preloader from "@/components/layout/Preloader";
 import CustomCursor from "@/components/layout/CustomCursor";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import ScrollReveal from "@/components/layout/ScrollReveal";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
 import Skills from "@/components/sections/Skills";
@@ -19,27 +19,18 @@ export default function Home() {
 
   useEffect(() => {
     const visited = sessionStorage.getItem("visited");
-    if (visited) {
-      setLoading(false);
-      setHasVisited(true);
-    } else {
-      sessionStorage.setItem("visited", "true");
-    }
+    if (visited) { setLoading(false); setHasVisited(true); }
+    else { sessionStorage.setItem("visited", "true"); }
   }, []);
-
-  const handlePreloaderComplete = () => {
-    setLoading(false);
-  };
 
   return (
     <>
-      {loading && !hasVisited && (
-        <Preloader onComplete={handlePreloaderComplete} />
-      )}
+      {loading && !hasVisited && <Preloader onComplete={() => setLoading(false)} />}
       <CustomCursor />
       <SmoothScroll>
-        <div className={`transition-opacity duration-500 ${loading && !hasVisited ? "opacity-0" : "opacity-100"}`}>
+        <div style={{ opacity: loading && !hasVisited ? 0 : 1, transition: "opacity 0.5s ease" }}>
           <Navbar />
+          <ScrollReveal />
           <main>
             <Hero />
             <About />
