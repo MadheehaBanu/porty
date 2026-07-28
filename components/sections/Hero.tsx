@@ -89,8 +89,8 @@ export default function Hero() {
       </div>
 
       {/* Gradient overlays */}
-      <div className="absolute inset-0 z-1 bg-gradient-radial from-accent-indigo/5 via-transparent to-transparent" />
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-dark to-transparent z-1" />
+      <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle,rgba(99,102,241,0.05)_0%,transparent_70%)]" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#050505] to-transparent z-[1]" />
 
       {/* Content */}
       <div ref={contentRef} className="relative z-10 max-w-6xl mx-auto px-6 md:px-12 pt-24">

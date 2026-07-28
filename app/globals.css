@@ -13,10 +13,6 @@
   --font-family-mono: var(--font-jetbrains), monospace;
   --font-family-body: var(--font-inter), sans-serif;
 
-  --background-image-gradient-radial: radial-gradient(var(--tw-gradient-stops));
-  --background-image-glow-indigo: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
-  --background-image-glow-cyan: radial-gradient(circle, rgba(6,182,212,0.15) 0%, transparent 70%);
-
   --animate-float: float 6s ease-in-out infinite;
   --animate-pulse-glow: pulseGlow 2s ease-in-out infinite;
   --animate-blink: blink 1s step-end infinite;
@@ -300,11 +296,6 @@ body {
   animation: blink 1s step-end infinite;
 }
 
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
 /* Mobile menu */
 .mobile-menu {
   position: fixed;
@@ -356,20 +347,12 @@ body {
 }
 
 /* Floating animation */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
 
 /* Pulse glow */
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
-}
 
 .animate-pulse-glow {
   animation: pulseGlow 2s ease-in-out infinite;
