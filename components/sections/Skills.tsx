@@ -121,7 +121,7 @@ export default function Skills() {
   return (
     <section id="skills" style={{ padding: "8rem 1.5rem" }} className="bg-dark-100">
       <div style={{ maxWidth: "72rem", margin: "0 auto" }}>
-        <SectionHeading number="02" title="Tech Arsenal" subtitle="Tools and technologies I work with" />
+        <SectionHeading number="02" title="What I Work With" subtitle="Tools and technologies I work with" />
 
         {/* Terminal */}
         <div style={{ display: "flex", justifyContent: "center", marginTop: "3rem" }}>

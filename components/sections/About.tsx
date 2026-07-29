@@ -61,7 +61,7 @@ export default function About() {
         }}>
 
           {/* Photo */}
-          <div ref={photoRef} style={{ position: "relative", display: "flex", justifyContent: "center" }}>
+          <div ref={photoRef} style={{ position: "relative", display: "flex", justifyContent: "center", paddingBottom: "3.5rem" }}>
             <div
               className="photo-frame"
               style={{ borderRadius: "1rem", overflow: "hidden", aspectRatio: "4/5", maxWidth: "22rem", width: "100%" }}
@@ -80,18 +80,24 @@ export default function About() {
               </div>
             </div>
 
-            {/* Floating badge */}
-            <div
-              className="glow-border"
-              style={{
-                position: "absolute", bottom: "-1rem", right: "1rem",
-                borderRadius: "0.75rem", padding: "0.75rem 1rem",
-                background: "#111",
+            {/* Floating badge — sits outside the image, below it */}
+            <div style={{ position: "absolute", bottom: "-3rem", left: "50%", transform: "translateX(-50%)", display: "flex", alignItems: "center", gap: "0.5rem",
+                padding: "0.5rem 1rem", borderRadius: "9999px",
+                background: "rgba(10,10,18,0.92)",
+                border: "1px solid rgba(99,102,241,0.4)",
+                boxShadow: "0 0 18px rgba(99,102,241,0.15)",
+                backdropFilter: "blur(10px)",
+                whiteSpace: "nowrap",
               }}
             >
-              <p className="font-mono" style={{ fontSize: "0.75rem", color: "#06b6d4" }}>Currently</p>
-              <p className="font-heading" style={{ fontWeight: 700, fontSize: "0.875rem", color: "#fff" }}>@ Intern</p>
+              <span style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <span style={{ position: "absolute", width: "16px", height: "16px", borderRadius: "50%", background: "rgba(34,197,94,0.25)", animation: "ping 1.4s cubic-bezier(0,0,0.2,1) infinite" }} />
+                <span style={{ width: "8px", height: "8px", borderRadius: "50%", background: "#22c55e", display: "block" }} />
+              </span>
+              <span className="font-mono" style={{ fontSize: "0.7rem", color: "#6366f1", letterSpacing: "0.06em", textTransform: "uppercase" }}>Currently</span>
+              <span className="font-heading" style={{ fontWeight: 700, fontSize: "0.82rem", color: "#fff" }}>Full Stack Intern</span>
             </div>
+            <style>{`@keyframes ping { 75%,100%{transform:scale(2);opacity:0} }`}</style>
           </div>
 
           {/* Bio */}

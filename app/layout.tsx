@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, JetBrains_Mono, Inter } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono, Inter, Rajdhani } from "next/font/google";
 import "./globals.css";
 import PageTransition from "@/components/layout/PageTransition";
 
@@ -21,6 +21,13 @@ const inter = Inter({
   display: "swap",
 });
 
+const rajdhani = Rajdhani({
+  subsets: ["latin"],
+  weight: ["700"],
+  variable: "--font-rajdhani",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Madheeha Banu — Full Stack Developer",
   description:
@@ -36,7 +43,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${inter.variable} noise-overlay antialiased`}>
+      <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${inter.variable} ${rajdhani.variable} noise-overlay antialiased`}>
         <PageTransition>
           {children}
         </PageTransition>

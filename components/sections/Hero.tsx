@@ -49,28 +49,55 @@ export default function Hero() {
   }, [displayed, deleting, titleIdx]);
 
   useEffect(() => {
-    const tl = gsap.timeline({ delay: 0.2 });
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&";
+    const name = "MADHEEHA BANU";
+
     if (nameRef.current) {
-      const lines = ["MADHEEHA", "BANU"];
-      nameRef.current.innerHTML = lines
-        .map((word) =>
-          `<div style="display:block">${word
-            .split("")
-            .map((c) => `<span class="hero-char">${c}</span>`)
-            .join("")}</div>`
+      // Build spans, space becomes a <br/>
+      nameRef.current.innerHTML = name
+        .split("")
+        .map((c, i) =>
+          c === " "
+            ? `<br/>`
+            : `<span id="gc-${i}" style="display:inline-block;color:#fff">&nbsp;</span>`
         )
         .join("");
-      tl.fromTo(
-        ".hero-char",
-        { y: 100, opacity: 0, rotateX: -90 },
-        { y: 0, opacity: 1, rotateX: 0, stagger: { amount: 0.8, from: "random" }, duration: 1, ease: "back.out(1.7)" }
-      );
+
+      const letterIndices = name
+        .split("")
+        .map((c, i) => (c !== " " ? i : null))
+        .filter((i) => i !== null) as number[];
+
+      letterIndices.forEach((idx, order) => {
+        const span = document.getElementById(`gc-${idx}`);
+        if (!span) return;
+        const real = name[idx];
+        const startDelay = order * 60;   // stagger each letter
+        const scrambleDuration = 500;    // ms of scrambling
+        const interval = 40;            // ms per frame
+        let elapsed = 0;
+
+        setTimeout(() => {
+          const timer = setInterval(() => {
+            elapsed += interval;
+            if (elapsed >= scrambleDuration) {
+              span.textContent = real;
+              span.style.color = "#fff";
+              clearInterval(timer);
+            } else {
+              span.textContent = chars[Math.floor(Math.random() * chars.length)];
+              span.style.color = elapsed > scrambleDuration * 0.6 ? "#6366f1" : "#06b6d4";
+            }
+          }, interval);
+        }, startDelay);
+      });
     }
-    tl.fromTo(
+
+    const totalDelay = ("MADHEEHA BANU".replace(" ", "").length * 60 + 500) / 1000;
+    gsap.fromTo(
       ".hero-sub",
       { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, stagger: 0.15, duration: 0.7, ease: "power3.out" },
-      "-=0.4"
+      { y: 0, opacity: 1, stagger: 0.15, duration: 0.7, ease: "power3.out", delay: totalDelay - 0.3 }
     );
   }, []);
 
@@ -106,6 +133,7 @@ export default function Hero() {
               lineHeight: 1.05,
               marginBottom: "1.5rem",
               perspective: "1000px",
+              fontFamily: "var(--font-rajdhani), sans-serif",
             }}
           >
             MADHEEHA<br />BANU
